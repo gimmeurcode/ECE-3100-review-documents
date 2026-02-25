@@ -1,0 +1,16 @@
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.toc
+*.nav
+*.snm
+*.vrb
+*.bbl
+*.blg
+*.600gf
+*.600pk
+*.tfm
+*.mf
