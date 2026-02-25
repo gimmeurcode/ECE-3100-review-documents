@@ -1,3 +1,4 @@
+% extarticle 8pt base; actual font set to 7pt via \fontsize in document body
 \documentclass[8pt,landscape]{extarticle}
 \usepackage[landscape,margin=0.2in,top=0.15in,bottom=0.15in]{geometry}
 \usepackage{multicol}
@@ -389,8 +390,8 @@ Exactly 2 women, 4 men: $\binom{6}{2}\binom{9}{4}$.
 At least 2 women: $\binom{15}{6}-\binom{9}{6}-\binom{6}{1}\binom{9}{5}$.
 
 \textbf{Rooks problem:} 8 rooks on $8\times8$ board, no two share row or column.
-Choose 8 rows from 8 ($\binom{8}{8}$), assign columns ($8!$ permutations):
-$P=8!/\binom{64}{8}\cdot\frac{1}{8!}\cdot8!=\frac{8!}{\binom{64}{8}}$.
+Total placements on distinct squares: $\binom{64}{8}$. Safe: one per row, assign columns $=8!$.
+$P=\frac{8!}{\binom{64}{8}}$.
 
 \subsection*{Bayes' Rule Applications}
 \textbf{Radar/detection:}
