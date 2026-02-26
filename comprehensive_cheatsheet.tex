@@ -1,0 +1,491 @@
+% ECE 3100 Comprehensive Cheat Sheet — Covers Ch. 1–2.3, all HW (I–IV), all Discussions (I–V)
+% 2 pages, landscape, letter paper, font 7, two columns, minimal blank space
+\documentclass[8pt,landscape]{extarticle}
+\usepackage[landscape,letterpaper,margin=0.2in,top=0.15in,bottom=0.15in]{geometry}
+\usepackage{multicol}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{microtype}
+\usepackage{booktabs}
+
+% Minimize spacing
+\setlength{\columnsep}{6pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.3pt plus 0.1pt minus 0.1pt}
+\titlespacing*{\section}{0pt}{2pt}{0.5pt}
+\titlespacing*{\subsection}{0pt}{1.5pt}{0.3pt}
+\titleformat{\section}{\bfseries\scriptsize}{\thesection}{0.3em}{}
+\titleformat{\subsection}{\bfseries\scriptsize}{\thesubsection}{0.3em}{}
+\setlist{nosep,leftmargin=*,topsep=0pt,partopsep=0pt,parsep=0pt,itemsep=0pt}
+\pagestyle{empty}
+
+% Tighten math spacing
+\medmuskip=1mu
+\thickmuskip=2mu
+\abovedisplayskip=1pt
+\belowdisplayskip=1pt
+\abovedisplayshortskip=0.5pt
+\belowdisplayshortskip=0.5pt
+
+\begin{document}
+\fontsize{7}{8.4}\selectfont
+\begin{multicols}{2}
+
+\begin{center}
+{\footnotesize\bfseries ECE 3100 Probability Cheat Sheet (Bertsekas \& Tsitsiklis, Ch.\ 1--2.3 + All HW/Discussions)}
+\end{center}
+\vspace{-3pt}
+
+%=============================================================================
+\section*{1. Sets \& Sample Spaces (Sec.\ 1.1)}
+%=============================================================================
+\textbf{Experiment:} procedure producing exactly one \textbf{outcome}.
+\textbf{Sample space} $\Omega$: set of \emph{all} possible outcomes.
+\textbf{Event}: subset $A\subseteq\Omega$; occurs if outcome $\omega\in A$.
+Outcomes must be \textbf{mutually exclusive} and \textbf{collectively exhaustive}.
+
+\textbf{Set operations:}
+$A\cup B$ (union/``or''),
+$A\cap B$ (intersection/``and''),
+$A^c=\Omega\setminus A$ (complement/``not $A$'').
+
+\textbf{Basic identities:}
+$(A^c)^c\!=\!A$;\; $A\!\cup\!\Omega\!=\!\Omega$;\; $A\!\cap\!\Omega\!=\!A$;\; $A\!\cup\!A^c\!=\!\Omega$;\; $A\!\cap\!A^c\!=\!\varnothing$;\; $A\!\cup\!\varnothing\!=\!A$;\; $A\!\cap\!\varnothing\!=\!\varnothing$
+
+\textbf{De Morgan's Laws:}
+$(A\cup B)^c = A^c\cap B^c$;\;
+$(A\cap B)^c = A^c\cup B^c$.
+Generalized: $\bigl(\bigcup_i A_i\bigr)^c=\bigcap_i A_i^c$;\; $\bigl(\bigcap_i A_i\bigr)^c=\bigcup_i A_i^c$.
+
+\textbf{Distributive:} $A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$;\; $A\cup(B\cap C)=(A\cup B)\cap(A\cup C)$.
+
+\textbf{Decomposition:} $A^c=(A^c\cap B)\cup(A^c\cap B^c)$;\; $(A\cap B)^c=(A^c\cap B)\cup(A^c\cap B^c)\cup(A\cap B^c)$.
+
+\textbf{Partition:} $A_1,\ldots,A_n$ partition $\Omega$ if $A_i\cap A_j=\varnothing$ for $i\neq j$ and $\bigcup_{i} A_i=\Omega$.
+
+\textbf{Disjoint (Mutually Exclusive):} $A\cap B=\varnothing$; $A$ and $B$ cannot both occur.
+
+\textbf{Subset:} $A\subseteq B$ means every outcome in $A$ is also in $B$; $P(A)\le P(B)$.
+
+\textbf{Expressing events:}
+``At least two of $A,B,C$'': $(A\!\cap\!B)\cup(A\!\cap\!C)\cup(B\!\cap\!C)$.
+``Exactly one of $A,B,C$'': $(A\!\cap\!B^c\!\cap\!C^c)\cup(A^c\!\cap\!B\!\cap\!C^c)\cup(A^c\!\cap\!B^c\!\cap\!C)$.
+``At most one of $A,B,C$'': $(A\!\cap\!B)^c\cap(A\!\cap\!C)^c\cap(B\!\cap\!C)^c$.
+``$A$ or, if not, not $B$'': $A\cup B^c$.
+``$A$ occurs but $B$ doesn't'': $A\cap B^c$.
+``Neither $A$ nor $B$'': $A^c\cap B^c = (A\cup B)^c$.
+``$A$ or $B$ but not both'' (XOR): $(A\cap B^c)\cup(A^c\cap B)$.
+``$A$ and $C$ occur, but neither $B$ nor $D$'': $A\cap C\cap B^c\cap D^c$.
+
+\textbf{Infinite intersections:} $\bigcap_{n=0}^\infty A_n$ where $A_n=\{m\in\mathbb{N}:m\ge n\}$: every natural number is eventually excluded, so $\bigcap A_n=\varnothing$.
+
+%=============================================================================
+\section*{2. Probability Axioms (Sec.\ 1.2)}
+%=============================================================================
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Nonnegativity:} $P(A)\geq 0$ for all $A$.
+\item \textbf{Normalization:} $P(\Omega)=1$.
+\item \textbf{(Countable) Additivity:} If $A_1,A_2,\ldots$ pairwise disjoint, $P\!\bigl(\bigcup_{i} A_i\bigr)=\sum_{i} P(A_i)$.
+\end{enumerate}
+
+\subsection*{Key Consequences}
+$P(\varnothing)=0$.\; $P(A^c)=1-P(A)$.\; $0\le P(A)\le 1$.
+
+\textbf{Inclusion--Exclusion (2):}
+$P(A\cup B)=P(A)+P(B)-P(A\cap B)$.
+
+\textbf{Inclusion--Exclusion (3):}
+$P(A\!\cup\!B\!\cup\!C)=P(A)\!+\!P(B)\!+\!P(C)\!-\!P(A\!\cap\!B)\!-\!P(B\!\cap\!C)\!-\!P(A\!\cap\!C)\!+\!P(A\!\cap\!B\!\cap\!C)$.
+
+\textbf{Alt.\ form:} $P(A\!\cup\!B\!\cup\!C) = P(A) + P(A^c\!\cap\!B) + P(A^c\!\cap\!B^c\!\cap\!C)$.
+
+\textbf{Complement rule:} $P(\text{at least one of }A,B)=1-P(A^c\cap B^c)$.
+
+\textbf{Union bound (Boole):} $P(A\cup B)\le P(A)+P(B)$; equality iff disjoint.
+$P\!\bigl(\bigcup_i A_i\bigr)\le\sum_i P(A_i)$.
+
+\textbf{Difference:} $P(A\setminus B)=P(A\cap B^c)=P(A)-P(A\cap B)$.
+
+\textbf{Bonferroni:} $P(A\!\cap\!B) \geq P(A)\!+\!P(B)\!-\!1$;\;
+general: $P(\bigcap_{i=1}^n A_i) \geq \sum_{i=1}^n P(A_i) - (n-1)$.
+
+\textbf{Bounds on $P(A\cap B)$:} $\max(0,\,P(A)+P(B)-1)\le P(A\cap B)\le\min(P(A),P(B))$.
+$\max(P(A),P(B))\le P(A\cup B)\le\min(1,\,P(A)+P(B))$.
+
+\textbf{Exactly one of $A,B$:} $P(A\!\cap\!B^c)\!+\!P(A^c\!\cap\!B) = P(A)\!+\!P(B)\!-\!2P(A\!\cap\!B)$.
+
+\textbf{Exactly one of $A,B,C$:} $P(A)+P(B)+P(C)-2P(A\!\cap\!B)-2P(A\!\cap\!C)-2P(B\!\cap\!C)+3P(A\!\cap\!B\!\cap\!C)$.
+
+\textbf{Exactly 2 of $A,B,C$:} $P(A\!\cap\!B)+P(A\!\cap\!C)+P(B\!\cap\!C) - 3P(A\!\cap\!B\!\cap\!C)$.
+
+\subsection*{Discrete Uniform Law}
+If $\Omega$ finite with $|\Omega|=n$ equally likely outcomes:
+$P(A)=|A|/|\Omega|=\text{(\# favorable)}/\text{(\# total)}$.
+
+\subsection*{Continuous Uniform Models}
+\textbf{Uniform on interval} $[a,b]$: $P([c,d])=(d-c)/(b-a)$ for $a\le c\le d\le b$.
+
+\textbf{Uniform on region} $S\subset\mathbb{R}^2$: $P(A)=\text{Area}(A\cap S)/\text{Area}(S)$.
+
+\textbf{Manhattan distance:} $|x|+|y|$. Point uniform on $[0,1]^2$: $P(x+y\le a)$: if $0\le a\le 1$, $=a^2/2$; if $1< a\le 2$, $=1-(2-a)^2/2$.
+
+\textbf{Meeting problem:} Two arrivals uniform on $[0,T]$. $P(|X-Y|\le w)=1-(1-w/T)^2$ for $0\le w\le T$.
+One arrives first but other late by $>w$: $P=\frac{(T-w)^2}{2T^2}$ (each person).
+
+%=============================================================================
+\section*{3. Conditional Probability (Sec.\ 1.3)}
+%=============================================================================
+\[P(A\mid B)=\frac{P(A\cap B)}{P(B)},\quad P(B)>0.\]
+$P(\cdot\mid B)$ is itself a valid probability law (satisfies all three axioms).
+So all rules hold conditionally, e.g.\ $P(A_1\cup A_2\mid B)=P(A_1\mid B)+P(A_2\mid B)$ when $A_1\cap A_2=\varnothing$.
+$P(A^c\mid B)=1-P(A\mid B)$.
+If equally likely: $P(A\mid B)=|A\cap B|/|B|$.
+
+\textbf{Multiplication rule:}
+$P(A\cap B)=P(B)\,P(A\mid B)=P(A)\,P(B\mid A)$.
+
+\textbf{Chain rule:}
+$P\!\bigl(\bigcap_{i=1}^n A_i\bigr)=P(A_1)\prod_{k=2}^n P\!\bigl(A_k\,\big|\,\bigcap_{j=1}^{k-1}A_j\bigr)$.
+
+\textbf{Two coins:} $P(\text{HH}\mid\text{1st H})=p$. But $P(\text{HH}\mid\text{at least one H})=\frac{p^2}{2p-p^2}\le p$.
+
+%=============================================================================
+\section*{4. Total Probability \& Bayes' Rule (Sec.\ 1.3--1.4)}
+%=============================================================================
+If $A_1,\ldots,A_n$ partition $\Omega$ with $P(A_i)>0$:
+
+\textbf{Total Probability:} $P(B)=\sum_{i=1}^n P(A_i)\,P(B\mid A_i)$.
+
+\textbf{Bayes' Rule:}
+$P(A_i\mid B)=\frac{P(B\mid A_i)\,P(A_i)}{\sum_{j=1}^n P(B\mid A_j)\,P(A_j)}$.
+
+\textbf{Two-event:}
+$P(A\mid B)=\frac{P(B\mid A)\,P(A)}{P(B\mid A)\,P(A)+P(B\mid A^c)\,P(A^c)}$.
+
+\textbf{Terminology:}
+\textbf{Prior} $P(A_i)$---initial belief.
+\textbf{Likelihood} $P(B\mid A_i)$---how likely evidence under each hypothesis.
+\textbf{Posterior} $P(A_i\mid B)$---updated belief after evidence.
+
+\textbf{Sequential Bayes:} After observing $B_1$, posterior $P(A_i\mid B_1)$ becomes new prior; observe $B_2$ and apply Bayes again.
+
+\textbf{False positive/negative:}
+$P(\text{false alarm})=P(\text{detect}\mid\text{absent})\,P(\text{absent})$.
+$P(\text{miss})=P(\text{no detect}\mid\text{present})\,P(\text{present})$.
+\textbf{False-Positive Puzzle:} Accurate test can have low positive predictive value if prior probability (prevalence) is very small.
+
+\textbf{Monty Hall/Prisoner:} Posterior depends on guard's/host's randomization strategy. If Gollum to be released (prob 2/3), guard's answer is determined. If not (prob 1/3), guard picks uniformly. By Bayes: $P(\text{released}\mid\text{guard says }X)=2/3$ regardless.
+
+%=============================================================================
+\section*{5. Independence (Sec.\ 1.5)}
+%=============================================================================
+\subsection*{Two Events}
+$A$ and $B$ are \textbf{independent} iff $P(A\cap B)=P(A)\,P(B)$.
+Equiv.\ (when defined): $P(A\mid B)=P(A)$;\; $P(B\mid A)=P(B)$.
+If $A\perp\!\!\!\perp B$: $A\perp\!\!\!\perp B^c$,\; $A^c\perp\!\!\!\perp B$,\; $A^c\perp\!\!\!\perp B^c$.
+
+\subsection*{Independence vs.\ Disjointness --- Key Comparison}
+\begin{tabular}{@{}p{0.46\columnwidth}|p{0.48\columnwidth}@{}}
+\textbf{Disjoint} ($A\cap B=\varnothing$) & \textbf{Independent} ($P(A\!\cap\!B)=P(A)P(B)$) \\\midrule
+$P(A\cap B)=0$ & $P(A\cap B)=P(A)P(B)$ \\
+$P(A\cup B)=P(A)+P(B)$ & $P(A\!\cup\!B)=P(A)+P(B)-P(A)P(B)$ \\
+$P(A\mid B)=0$ (if $P(B)>0$) & $P(A\mid B)=P(A)$ \\
+Knowing $B$ $\Rightarrow$ $A$ did not occur & Knowing $B$ gives \emph{no info} about $A$ \\
+$P(A),P(B)>0 \Rightarrow$ \textbf{NOT} indep. & Can be disjoint only if $P(A)=0$ or $P(B)=0$
+\end{tabular}
+
+\textbf{Critical:} If $P(A)>0$ and $P(B)>0$, disjoint events are \textbf{never} independent ($0\neq P(A)P(B)$). Disjoint = \emph{maximally dependent}.
+
+\textbf{Positive/Negative Association:}
+$P(A\mid B)>P(A)$ $\Leftrightarrow$ $P(B\mid A)>P(B)$ (symmetric).
+If $P(A\mid B)>P(A)$: $A,B$ are \textbf{not} independent and \textbf{not} disjoint.
+
+\textbf{Independent of itself:} $P(A)=P(A)^2$ $\Rightarrow$ $P(A)\in\{0,1\}$.
+If $P(A)=0$ or $P(A)=1$, then $A$ is independent of \emph{every} event.
+
+\subsection*{Multiple Events \& Mutual Independence}
+$A_1,\ldots,A_n$ \textbf{mutually independent} iff for \emph{every} subset $S\subseteq\{1,\ldots,n\}$ with $|S|\ge2$:
+$P\!\bigl(\bigcap_{i\in S}A_i\bigr)=\prod_{i\in S}P(A_i)$.
+For 3 events: need all 4 conditions (3 pairwise + triple). $2^n-n-1$ conditions total.
+Pairwise indep.\ $\not\Rightarrow$ mutual indep.; triple alone $\not\Rightarrow$ pairwise.
+
+\textbf{Key identity (complements):} If $A_1,\ldots,A_n$ mutually independent:
+$P(A_1^c\cap\cdots\cap A_n^c)=\prod_{i=1}^n(1-P(A_i))$;\;
+$P(A_1^c\cup\cdots\cup A_n^c)=1-\prod_{i=1}^n P(A_i)$.
+
+\textbf{Proof:} By De Morgan: $A_1^c\cup\cdots\cup A_n^c=(A_1\cap\cdots\cap A_n)^c$.
+$P=1-P(A_1\cap\cdots\cap A_n)=1-\prod P(A_i)$ by independence.
+
+\textbf{Conditional Independence} given $C$ ($P(C)>0$):
+$P(A\cap B\mid C)=P(A\mid C)\,P(B\mid C)$;\;
+equiv.\ $P(A\mid B\cap C)=P(A\mid C)$.
+Indep.\ $\not\Rightarrow$ cond.\ indep., and vice versa.
+
+\textbf{Independent trials:} Coin flips, die rolls, transmissions---each trial's outcome doesn't affect others. Product rule: $P(\text{seq})=\prod P(\text{each})$.
+
+\subsection*{Bernoulli Trials \& Reliability}
+$n$ indep.\ tosses, $P(\text{head})=p$:\;
+$P(k\text{ heads}) = \binom{n}{k}p^k(1-p)^{n-k}$.
+
+\textbf{Series} (all must work): $P = p_1 p_2 \cdots p_m$.\;
+\textbf{Parallel} (any suffices): $P = 1-(1-p_1)\cdots(1-p_m)$.
+
+%=============================================================================
+\section*{6. Counting (Sec.\ 1.6)}
+%=============================================================================
+\textbf{Multiplication principle:} $r$ stages with $n_1,\ldots,n_r$ choices $\Rightarrow$ $\prod n_i$ total.
+
+\textbf{Permutations:} all $n$: $n!$;\; $0!=1$.
+\textbf{$k$-permutations:} $n!/(n-k)!$ (ordered subsets of size $k$).
+
+\textbf{Combinations:} $\binom{n}{k}=\frac{n!}{k!(n-k)!}$ (unordered subsets).
+$\binom{n}{0}=\binom{n}{n}=1$,\; $\binom{n}{k}=\binom{n}{n-k}$,\; $\sum_{k=0}^n\binom{n}{k}=2^n$.
+$\binom{n}{k}=0$ if $k<0$ or $k>n$.
+
+\textbf{Pascal's Rule:} $\binom{n}{k}=\binom{n-1}{k-1}+\binom{n-1}{k}$.
+$k\binom{n}{k}=n\binom{n-1}{k-1}$;\; $\sum_{k=0}^n k\binom{n}{k}=n\cdot2^{n-1}$.
+
+\textbf{Multinomial:} $\frac{n!}{n_1!n_2!\cdots n_r!}$ ways to partition $n$ into groups of sizes $n_1+\cdots+n_r=n$.
+E.g., anagrams of TATTOO: $6!/(3!\,1!\,2!)=60$.
+
+\textbf{Sampling summary:}
+\begin{tabular}{@{}lll@{}}
+& Ordered & Unordered \\\midrule
+With replacement & $n^k$ & $\binom{n+k-1}{k}$ \\
+Without replacement & $\frac{n!}{(n-k)!}$ & $\binom{n}{k}$ \\
+\end{tabular}
+
+\textbf{Hypergeometric:} $N$ items, $M$ special, draw $K$ w/o replacement.
+$P(j\text{ special})=\frac{\binom{M}{j}\binom{N-M}{K-j}}{\binom{N}{K}}$,\; $0\le j\le\min(K,M)$.
+
+\textbf{Derangements} (permutations with no fixed points):
+$D_n = n!\sum_{k=0}^{n}\frac{(-1)^k}{k!} \approx \frac{n!}{e}$.
+$P(\text{all }n\text{ match})=1/n!$;\; $P(\text{first }m\text{ match})=(n-m)!/n!$.
+
+%=============================================================================
+\section*{7. Discrete Random Variables (Sec.\ 2.1--2.3)}
+%=============================================================================
+\textbf{Random variable (r.v.):} function $X:\Omega\to\mathbb{R}$.
+\textbf{Discrete:} range is finite or countably infinite.
+
+\subsection*{7.1 PMF (Probability Mass Function) (Sec.\ 2.2)}
+$p_X(x)=P(X=x)$.\; $p_X(x)\ge0$;\; $\sum_x p_X(x)=1$.
+$P(X\in S)=\sum_{x\in S}p_X(x)$.
+To compute: for each $x$, collect all outcomes giving $X=x$, sum their probs.
+
+\subsection*{7.2 Common Discrete Distributions}
+\textbf{Bernoulli}$(p)$: $X\in\{0,1\}$; $p_X(1)=p$, $p_X(0)=1-p$. $E[X]=p$, $\text{var}(X)=p(1-p)$.
+
+\textbf{Binomial}$(n,p)$: $X=$ \# successes in $n$ indep.\ Bernoulli trials.
+$p_X(k)=\binom{n}{k}p^k(1-p)^{n-k}$, $k=0,\ldots,n$. $E[X]=np$, $\text{var}(X)=np(1-p)$.
+
+\textbf{Geometric}$(p)$: $X=$ \# trials until first success.
+$p_X(k)=(1-p)^{k-1}p$, $k=1,2,\ldots$\; $E[X]=1/p$, $\text{var}(X)=(1-p)/p^2$.
+$P(X>k)=(1-p)^k$. \textbf{Memoryless:} $P(X>m+n\mid X>m)=P(X>n)$.
+
+\textbf{Negative Binomial} (Pascal): $X=$ \# trials until $r$-th success.
+$p_X(k)=\binom{k-1}{r-1}p^r(1-p)^{k-r}$, $k=r,r\!+\!1,\ldots$\; $E[X]=r/p$, $\text{var}(X)=r(1-p)/p^2$.
+Sum of $r$ indep.\ Geometric$(p)$ r.v.'s.
+
+\textbf{Discrete Uniform} on $\{a,\ldots,b\}$: $p_X(k)=1/(b-a+1)$.
+$E[X]=(a+b)/2$, $\text{var}(X)=(b-a)(b-a+2)/12$. Die: $E[X]=3.5$, $\text{var}(X)=35/12$.
+
+\textbf{Poisson}$(\lambda)$: $p_X(k)=e^{-\lambda}\lambda^k/k!$, $k=0,1,\ldots$
+$E[X]=\lambda$, $\text{var}(X)=\lambda$. Approx.\ Binomial when $n$ large, $p$ small, $\lambda=np$.
+
+\subsection*{7.3 Functions of Random Variables (Sec.\ 2.3)}
+If $Y=g(X)$: $p_Y(y)=\sum_{\{x:g(x)=y\}}p_X(x)$.
+E.g., $Y=|X|$: $p_Y(y)=p_X(y)+p_X(-y)$ for $y>0$.
+
+\textbf{Example:} $X$ uniform on $\{0,\ldots,9\}$, $Y=X\bmod3$:
+$p_Y(0)=4/10$; $p_Y(1)=3/10$; $p_Y(2)=3/10$.
+
+\textbf{Product r.v.:} $X=H\cdot T$ where $H+T=n$ flips. $X=k(n-k)$ for $k$ heads.
+$P(X=0)=p^n+(1-p)^n$.
+
+\subsection*{7.4 Expected Value (Mean) (Sec.\ 2.4)}
+$E[X]=\sum_x x\,p_X(x)$ (weighted average).
+
+\textbf{LOTUS (Expected Value Rule):} $E[g(X)]=\sum_x g(x)\,p_X(x)$.
+
+\textbf{Linearity (always):} $E[aX+b]=aE[X]+b$.\; $E[X+Y]=E[X]+E[Y]$ (even if dependent).
+
+$E[XY]=E[X]\,E[Y]$ \textbf{only when} $X,Y$ independent.
+\textbf{Warning:} $E[g(X)] \neq g(E[X])$ in general (only if $g$ linear).
+
+$n$-th moment: $E[X^n]=\sum_x x^n p_X(x)$.
+
+\subsection*{7.5 Variance \& Standard Deviation}
+$\text{var}(X)=E[(X-E[X])^2]=E[X^2]-(E[X])^2$.
+
+$\text{var}(aX+b)=a^2\text{var}(X)$ (shift doesn't change var).
+$\sigma_X=\sqrt{\text{var}(X)}$.\; $\text{var}(X)\ge0$; $=0$ iff $X$ constant.
+
+\textbf{Independent:} $\text{var}(X+Y)=\text{var}(X)+\text{var}(Y)$ (extends to $n$ mutually indep.\ r.v.'s).
+
+\textbf{Var of Binomial:} $X=X_1+\cdots+X_n$, each $X_i\sim\text{Bern}(p)$, indep.
+$\text{var}(X)=\sum\text{var}(X_i)=np(1-p)$.
+
+%=============================================================================
+\section*{8. Problem-Solving Strategies}
+%=============================================================================
+\textbf{Complement:} $P(\text{at least one})=1-P(\text{none})$.
+
+\textbf{Conditioning (Total Prob):} Partition into scenarios, compute each conditional, sum.
+
+\textbf{Sequential Bayes:} Posterior from step $k$ becomes prior for step $k+1$.
+
+\textbf{Tree diagrams:} Multiply along paths (chain rule); add across paths for total prob.
+
+\textbf{Counting method:} When $\Omega$ finite, equally likely: $P(A)=|A|/|\Omega|$.
+
+%=============================================================================
+\section*{9. Useful Formulas \& Identities}
+%=============================================================================
+$\sum_{n=0}^{\infty}\gamma^n = \frac{1}{1-\gamma}$,\; $|\gamma|<1$;\quad
+$\sum_{n=0}^{N-1}\gamma^n = \frac{1-\gamma^N}{1-\gamma}$
+
+$\sum_{n=1}^{\infty}n\gamma^{n-1} = \frac{1}{(1-\gamma)^2}$,\; $|\gamma|<1$
+
+$\lim_{n\to\infty}\left(1+\frac{\alpha}{n}\right)^n = e^\alpha$;\quad
+$(a+b)^n=\sum_{k=0}^n\binom{n}{k}a^k b^{n-k}$
+
+$\sum_{k=1}^{n}k = \frac{n(n+1)}{2}$;\;
+$\sum_{k=1}^{n}k^2 = \frac{n(n+1)(2n+1)}{6}$;\;
+$n! \approx \sqrt{2\pi n}(n/e)^n$
+
+\textbf{Binomial PMF sums to 1:} $\sum_{k=0}^{n}\binom{n}{k}p^k(1-p)^{n-k}=1$.
+
+\textbf{Geometric PMF sums to 1:} $\sum_{k=1}^\infty(1-p)^{k-1}p=p\cdot\frac{1}{1-(1-p)}=1$.
+
+%=============================================================================
+\section*{10. Worked Examples from HW/Discussion}
+%=============================================================================
+
+\subsection*{Probability Bounds (HWII)}
+Given $P(D)=0.13$, $P(M)=0.37$:
+$P(D\cup M)\in[0.37,\,0.50]$;\; $P(D\cap M)\in[0,\,0.13]$.
+Expect closer to max union / min intersection (most people don't overlap).
+
+\subsection*{Repetition Coding (HWII)}
+Send bit 3 times, majority decode. $P(\text{correct})=p^3+3p^2(1-p)$.
+$P(\text{error})=3p(1-p)^2+(1-p)^3$ where $p=$ prob bit transmitted correctly.
+
+\subsection*{Quality Control (HWII, DiscIV)}
+$N$ items, $M$ defective, test $K$ w/o replacement.
+$P(\text{no defective})=\frac{\binom{N-M}{K}}{\binom{N}{K}}$;\; decreases as $M$ increases.
+$P(\text{reject}\mid M\text{ defective})=1-\frac{\binom{N-M}{K}}{\binom{N}{K}}$.
+
+\subsection*{Hat/Name Drawing (HWII)}
+$n$ slips, $n$ students. Total arrangements: $n!$.
+$P(\text{all match})=1/n!$;\; $P(\text{first }m\text{ match})=(n-m)!/n!$.
+$P(\text{first }m\text{ get names of last }m)=m!(n-m)!/n!$.
+
+\subsection*{Conditional Prob.\ \& Independence (HWIII)}
+If $P(A\mid B)>P(A)$: (a) Yes, $P(B\mid A)>P(B)$ (symmetric). (b) Not independent. (c) Not disjoint (would need $P(A\mid B)=0$).
+
+\textbf{Sum of dice:} $A=\{\text{sum}=12\}$, $B=\{\text{at least one 6}\}$, $C=\{\text{at least one 2}\}$.
+$P(A)=1/36$, $P(B)=11/36$, $P(A\cap B)=1/36$. Check: $P(A)P(B)=11/1296\neq1/36$. \textbf{Not indep.}
+$P(A\cap C)=0\neq P(A)P(C)$: not indep.\ (disjoint with $P>0$!).
+
+\subsection*{Sequential Bayes (HWIII)}
+Biased die: standard vs loaded. Roll 3, then 6, then 5.
+After each roll, update prior. After seeing 5: $P(\text{standard}\mid\text{5})=1$ (loaded can't produce 5).
+
+\subsection*{Smaug in Caves (HWIII)}
+$P(\text{cave 1})=p_1$, $P(\text{cave 2})=p_2$. Drone visits cave 1, misses Smaug.
+$P(\text{cave 1}\mid\text{miss}) = \frac{p_1(1-d_1)}{p_1(1-d_1)+p_2}$;\;
+$P(\text{cave 2}\mid\text{miss}) = \frac{p_2}{p_1(1-d_1)+p_2}$. Sum to 1.
+
+\subsection*{Win-by-2 Match (HWIII)}
+Games paired into rounds. Round decisive w.p.\ $p^2+(1-p)^2$.
+$P(\text{win match})=\frac{p^2}{p^2+(1-p)^2}$ (geometric series on tied rounds).
+
+\subsection*{Gambler's Ruin}
+Start \$$k$, win \$$1$ w.p.\ $p$, lose \$$1$ w.p.\ $q=1-p$, stop at \$$0$ or \$$n$.
+$P(\text{reach }n) = \begin{cases}\frac{1-(q/p)^k}{1-(q/p)^n} & p\neq q \\ k/n & p=q=1/2\end{cases}$
+
+\subsection*{Phone Scratching (HWIV)}
+Each phone scratched w.p.\ $p$ indep. $P(\text{first }m\text{ get scratched})=p^m$.
+$P(\text{exactly }m\text{ scratched})=\binom{n}{m}p^m(1-p)^{n-m}$.
+
+\subsection*{Volleyball Rosters (HWIV)}
+15 students (6W, 9M), choose 6. Total: $\binom{15}{6}$.
+Exactly 2W, 4M: $\binom{6}{2}\binom{9}{4}$.\;
+At least 2W: $\binom{15}{6}-\binom{9}{6}-\binom{6}{1}\binom{9}{5}$.
+
+\subsection*{Best-of-$(2m-1)$ Series (HWIV, DiscIV)}
+First to $m$ wins. $P(\text{win series})=\sum_{k=m}^{2m-1}\binom{k-1}{m-1}p^m(1-p)^{k-m}$.
+If $p>1/2$: prefer \emph{longer} series (more games $\Rightarrow$ skill dominates).
+
+\textbf{Best-of-7:} $P(\text{Rangers win})=(1-p)^4\sum_{j=0}^{3}\binom{j+3}{3}p^j$.
+
+\subsection*{ALOHA Transmission (HWIV)}
+$n$ transmitters, each sends w.p.\ $p$ indep.
+$P(\text{success})=np(1-p)^{n-1}$. Max at $p=1/n$: $P_{\max}=(1-1/n)^{n-1}\to 1/e\approx0.368$.
+Over $T$ slots: $P(\ge1\text{ success})=1-(1-P_s)^T$.
+Min $T$ for $P\ge\alpha$: $T\ge\lceil\ln(1-\alpha)/\ln(1-P_s)\rceil$.
+$P(\text{exactly }k\text{ successful slots})=\binom{T}{k}P_s^k(1-P_s)^{T-k}$.
+$\lim_{\alpha\to1}T=\infty$ (need infinite slots to guarantee success).
+
+\subsection*{Teams/Power Team (DiscIV)}
+12 people, 4 teams of 3. Prob 3 of 4 special on same team:
+$\frac{\binom{4}{3}\cdot 4\cdot\binom{8}{2}\cdot\frac{9!}{(3!)^3}}{\frac{12!}{(3!)^4}}$.
+
+\subsection*{Rooks on Chessboard (DiscIV)}
+8 rooks on $8\times8$, all safe (no shared row/col): $P=\frac{8!}{\binom{64}{8}}$.
+
+\subsection*{Radar/Detection (DiscII)}
+$P(\text{alien})=0.05$, $P(\text{blip}\mid\text{alien})=0.99$, $P(\text{blip}\mid\text{no alien})=0.1$.
+$P(\text{alien}\mid\text{blip})=\frac{0.99\times0.05}{0.99\times0.05+0.1\times0.95}\approx0.343$.
+$P(\text{miss})=0.01\times0.05=0.0005$;\; $P(\text{false alarm})=0.1\times0.95=0.095$.
+
+\subsection*{More Heads (DiscII)}
+Frodo tosses $n+1$ coins, Sam $n$ coins. $P(\text{Frodo more heads})=1/2$.
+After $n$ coins each, equal prob of Frodo or Sam ahead; last coin breaks ties.
+
+\subsection*{Multiple Choice Bayes (DiscIII)}
+Knows answer w.p.\ $1/2$ (picks correct). W.p.\ $1/4$ eliminates 1 wrong (picks from 3). Otherwise guesses from 4.
+$P(\text{knew}\mid\text{correct})=\frac{1/2}{1/2+\frac{1}{4}\cdot\frac{1}{3}+\frac{1}{4}\cdot\frac{1}{4}}=\frac{24}{37}$.
+
+\subsection*{Judge vs.\ Jury (DiscIII)}
+Judge correct w.p.\ $p$. Jury: 2 members w.p.\ $p$, 1 flips coin. Majority rule.
+$P(\text{jury})=p^2+p(1-p)+\frac{1}{2}[p(1-p)+(1-p)^2]$. Compare to $p$.
+
+\subsection*{Power Plants (DiscIII)}
+Plant $k$ fails w.p.\ $p_k$, independently.
+Any one suffices: $P(\text{blackout})=\prod_k p_k$.
+Need $\ge2$ running: $P(\text{blackout})=\prod_k p_k+\sum_j(1-p_j)\prod_{k\neq j}p_k$.
+
+\subsection*{Non-Uniform Die (HWI)}
+Face $k$ has prob $\alpha(k+1)$: $\sum_{k=0}^{n-1}\alpha(k+1)=1\Rightarrow\alpha=\frac{2}{n(n+1)}$.
+12-sided: $\alpha=1/78$, $P(k)=(k+1)/78$.
+
+\subsection*{Crayon Drawing (HWI)}
+Box with 3 crayons. Draw one, return only if cyan, draw again.
+$P(2\text{nd}=l\mid1\text{st}=k)$ depends on whether $k$ returned. Use chain rule for joint prob.
+
+\subsection*{PMF Computation (DiscV)}
+$p_X(x)=x^2/a$ for $x\in\{-3,\ldots,3\}$: $a=28$.
+$E[X]=0$ (symmetry). $E[X^2]=7$. $\text{var}(X)=7$.
+
+\subsection*{Random Test Score (DiscV)}
+3 tests (easy $p=0.9$, med $p=0.7$, hard $p=0.5$), 3 questions, chosen uniformly.
+$p_X(k)=\frac{1}{3}\bigl[\binom{3}{k}(0.9)^k(0.1)^{3-k}+\binom{3}{k}(0.7)^k(0.3)^{3-k}+\binom{3}{k}(0.5)^3\bigr]$.
+
+\subsection*{Spinner (HWI)}
+Uniform on $[0,2\pi)$. Colors in quadrants: $P(\text{any color})=1/4$.
+Finite: $\Omega=\{R,G,Y,B\}$, $P=1/4$. Infinite: $\Omega=[0,2\pi)$, $P=\theta/(2\pi)$.
+
+\subsection*{Key Checks}
+\begin{itemize}
+\item Do probs sum to 1? Is sample space complete?
+\item Ordered/unordered? With/without replacement?
+\item For independence: check $P(A\cap B)=P(A)P(B)$ (not just $P(A\mid B)$).
+\item For Bayes: use total probability in denominator.
+\item Complement often easier than direct calculation.
+\end{itemize}
+
+\end{multicols}
+\end{document}
